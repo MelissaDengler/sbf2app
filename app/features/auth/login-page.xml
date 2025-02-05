@@ -1,0 +1,22 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Login" />
+    
+    <StackLayout class="p-4">
+        <Label text="Welcome Back" class="text-2xl font-bold mb-4" />
+        
+        <TextField hint="Email" text="{{ email }}" keyboardType="email" 
+                   class="input mb-2 p-4 rounded-lg border border-gray-300" />
+        
+        <TextField hint="Password" text="{{ password }}" secure="true"
+                   class="input mb-4 p-4 rounded-lg border border-gray-300" />
+        
+        <Button text="Login" tap="{{ onLogin }}" 
+                class="btn btn-primary p-4 rounded-lg bg-blue-500 text-white" />
+        
+        <Button text="Register" tap="{{ onRegister }}" 
+                class="btn btn-secondary p-4 rounded-lg bg-gray-200 mt-2" />
+        
+        <Label text="{{ errorMessage }}" class="text-red-500 mt-2" 
+               visibility="{{ errorMessage ? 'visible' : 'collapsed' }}" />
+    </StackLayout>
+</Page>
