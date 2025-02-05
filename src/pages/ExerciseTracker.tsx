@@ -9,7 +9,7 @@ import { ExerciseChart } from "@/components/exercise/ExerciseChart"
 import { useState } from "react"
 
 export function ExerciseTracker() {
-  const { activities, stats } = useWellness()
+  const { activities, stats: wellnessStats } = useWellness()
   const [selectedView, setSelectedView] = useState<'calendar' | 'chart'>('calendar')
 
   const exerciseActivities = activities.filter(a => a.type === 'exercise')
@@ -17,7 +17,7 @@ export function ExerciseTracker() {
     a => new Date(a.timestamp) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   ).length
 
-  const stats = [
+  const statCards = [
     {
       title: "Weekly Workouts",
       value: weeklyWorkouts,
@@ -27,7 +27,7 @@ export function ExerciseTracker() {
     },
     {
       title: "Calories Burned",
-      value: stats.daily.calories,
+      value: wellnessStats.daily.calories,
       description: "Today's total",
       icon: Flame,
       trend: 12, // Calculate from historical data
@@ -63,7 +63,7 @@ export function ExerciseTracker() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-4 mb-8">
-          {stats.map((stat, i) => (
+          {statCards.map((stat, i) => (
             <motion.div
               key={stat.title}
               initial={{ opacity: 0, y: 20 }}
