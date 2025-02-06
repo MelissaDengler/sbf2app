@@ -6,6 +6,7 @@ import { useWellness } from "@/hooks/useWellness"
 import { PlusCircle } from "lucide-react"
 import { useState } from "react"
 import { toast } from "react-hot-toast"
+import { Activity } from "@/types"
 
 const exerciseTypes = [
   "Cardio",
@@ -40,15 +41,15 @@ export function AddExerciseDialog() {
       id: Date.now().toString(),
       type: "exercise",
       timestamp: new Date(),
-      duration: parseInt(formData.duration),
-      value: parseInt(formData.calories) || 0,
+      duration: Number(formData.duration),
+      value: Number(formData.calories) || 0,
       notes: formData.notes,
       metrics: {
         exerciseType: formData.type,
-        duration: parseInt(formData.duration),
-        calories: parseInt(formData.calories) || 0
+        duration: Number(formData.duration),
+        calories: Number(formData.calories) || 0
       }
-    }
+    } as Activity
 
     addActivity(activity)
     setOpen(false)
@@ -60,6 +61,18 @@ export function AddExerciseDialog() {
       calories: "",
       notes: ""
     })
+  }
+
+  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, duration: e.target.value })
+  }
+
+  const handleCaloriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, calories: e.target.value })
+  }
+
+  const handleNotesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, notes: e.target.value })
   }
 
   return (
@@ -99,7 +112,7 @@ export function AddExerciseDialog() {
             <Input
               type="number"
               value={formData.duration}
-              onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+              onChange={handleDurationChange}
               placeholder="Enter duration"
               required
             />
@@ -110,7 +123,7 @@ export function AddExerciseDialog() {
             <Input
               type="number"
               value={formData.calories}
-              onChange={(e) => setFormData({ ...formData, calories: e.target.value })}
+              onChange={handleCaloriesChange}
               placeholder="Optional"
             />
           </div>
@@ -119,7 +132,7 @@ export function AddExerciseDialog() {
             <label className="text-sm font-medium">Notes</label>
             <Input
               value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={handleNotesChange}
               placeholder="Add notes about your workout"
             />
           </div>

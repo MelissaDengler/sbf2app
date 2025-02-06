@@ -1,15 +1,23 @@
-import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon, Clock } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react"
 import toast from "react-hot-toast"
+
+interface Service {
+  id: number
+  name: string
+  duration: string
+  price: string
+}
 
 const AVAILABLE_TIMES = [
   "09:00 AM", "10:00 AM", "11:00 AM",
   "02:00 PM", "03:00 PM", "04:00 PM"
-]
+] as const
+
+type TimeSlot = typeof AVAILABLE_TIMES[number]
 
 const SERVICES = [
   { id: 1, name: "Wellness Consultation", duration: "1 hour", price: "$120" },
@@ -19,7 +27,7 @@ const SERVICES = [
 
 export function BookingDialog() {
   const [date, setDate] = useState<Date>()
-  const [selectedTime, setSelectedTime] = useState<string>()
+  const [selectedTime, setSelectedTime] = useState<TimeSlot>()
   const [selectedService, setSelectedService] = useState<number>()
 
   const handleBooking = () => {
@@ -92,9 +100,9 @@ export function BookingDialog() {
                 {AVAILABLE_TIMES.map((time) => (
                   <Button
                     key={time}
-                    variant={selectedTime === time ? "default" : "outline"}
-                    className={selectedTime === time ? "bg-pink-dark" : ""}
-                    onClick={() => setSelectedTime(time)}
+                    variant={time === selectedTime ? "default" : "outline"}
+                    className={time === selectedTime ? "bg-pink-dark" : ""}
+                    onClick={() => setSelectedTime(time as TimeSlot)}
                   >
                     {time}
                   </Button>

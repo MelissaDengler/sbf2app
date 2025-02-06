@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Trophy, Medal, Star, Award } from "lucide-react"
 import { useWellness } from "@/hooks/useWellness"
 import { Achievement } from "@/types"

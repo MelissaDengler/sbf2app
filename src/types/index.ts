@@ -1,3 +1,5 @@
+import { ExerciseSession } from './exercise'
+
 export interface User {
   id: string
   firstName: string
@@ -17,24 +19,38 @@ export interface WellnessGoal {
   completed: boolean
 }
 
+export type ActivityType = "exercise" | "sleep" | "water" | "meditation" | "meal"
+
 export interface Activity {
   id: string
-  type: 'exercise' | 'sleep' | 'meal' | 'water' | 'meditation'
+  type: ActivityType
   timestamp: Date
   duration?: number
   value: number
   notes?: string
-  metrics?: Record<string, number>
+  metrics?: ExerciseMetrics
 }
 
 export interface Achievement {
   id: string
   title: string
   description: string
-  icon: string
+  icon: 'trophy' | 'medal' | 'star' | 'award'
   category: 'exercise' | 'sleep' | 'nutrition' | 'mindfulness' | 'general'
   progress: number
   requirement: number
   completed: boolean
   unlockedAt?: Date
+}
+
+export interface ExerciseMetrics {
+  exerciseType: string
+  duration: number
+  calories: number
+  [key: string]: any
+}
+
+// Type guard for ExerciseSession
+export function isExerciseSession(activity: Activity): activity is ExerciseSession {
+  return activity.type === 'exercise'
 } 
